@@ -10,13 +10,20 @@ class ViewController: UIViewController {
         return imageView
     }()
 
+    private lazy var pickAlbumBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Library", image: nil, target: self, action: #selector(pickAnImageFromAlbum))
+        return barButtonItem
+    }()
+
+    private lazy var pickCameraBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Camera", image: nil, target: self, action: #selector(pickAnImageFromCamera))
         return barButtonItem
     }()
 
     private lazy var toolBar: UIToolbar = {
         let toolBar = UIToolbar(frame: .zero)
         toolBar.translatesAutoresizingMaskIntoConstraints = false
-        toolBar.setItems([pickBarButton], animated: true)
+        toolBar.setItems([pickAlbumBarButton, pickCameraBarButton], animated: true)
         return toolBar
     }()
 
