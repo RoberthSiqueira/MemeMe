@@ -7,6 +7,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleToFill
         return imageView
     }()
 
@@ -40,10 +41,10 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let safeArea = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 256),
-            imageView.heightAnchor.constraint(equalToConstant: 256)
+            imageView.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: toolBar.topAnchor)
         ])
 
         NSLayoutConstraint.activate([
