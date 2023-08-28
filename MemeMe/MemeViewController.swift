@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController, UINavigationControllerDelegate {
+class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UI
 
@@ -85,7 +85,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
 
 // MARK: - Image Picker Delegate
 
-extension ViewController: UIImagePickerControllerDelegate {
+extension MemeViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageView.image = image

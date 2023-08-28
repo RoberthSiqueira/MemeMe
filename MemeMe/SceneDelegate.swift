@@ -9,8 +9,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(windowScene: windowScene)
 
-        let viewController = ViewController()
-        window?.rootViewController = viewController
+        let memeViewController = MemeViewController()
+        window?.rootViewController = memeViewController
         window?.makeKeyAndVisible()
     }
 
