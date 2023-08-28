@@ -40,6 +40,11 @@ class ViewController: UIViewController {
         ])
     }
 
+    // MARK: Actions
+
+    @objc private func pickAnImage() {
+        let pickerViewController = UIImagePickerController()
+        present(pickerViewController, animated: true)
     }
 }
 
