@@ -4,8 +4,12 @@ class ViewController: UIViewController {
 
     // MARK: UI
 
-    private lazy var pickBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Pick", image: nil, target: self, action: #selector(pickAnImage))
+    private lazy var imageView: UIImageView = {
+        let imageView = UIImageView(frame: .zero)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
         return barButtonItem
     }()
 
@@ -25,6 +29,7 @@ class ViewController: UIViewController {
     // MARK: View
 
     private func addViewHierarchy() {
+        view.addSubview(imageView)
         view.addSubview(toolBar)
 
         setupConstraints()
@@ -32,6 +37,13 @@ class ViewController: UIViewController {
 
     private func setupConstraints() {
         let safeArea = view.safeAreaLayoutGuide
+
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 256),
+            imageView.heightAnchor.constraint(equalToConstant: 256)
+        ])
 
         NSLayoutConstraint.activate([
             toolBar.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
