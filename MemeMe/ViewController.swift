@@ -27,12 +27,6 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         return toolBar
     }()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        addViewHierarchy()
-    }
-
     // MARK: View
 
     private func addViewHierarchy() {
@@ -59,6 +53,19 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         ])
     }
 
+    // MARK: Instance Methods
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        addViewHierarchy()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        pickCameraBarButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+
     // MARK: Actions
 
     @objc private func pickAnImageFromAlbum() {
@@ -75,6 +82,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         present(pickerViewController, animated: true)
     }
 }
+
+// MARK: - Image Picker Delegate
 
 extension ViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
