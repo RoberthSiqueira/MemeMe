@@ -19,5 +19,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires the photo library to choose the image from the Meme</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires the camera to capture cool images from the Meme</string>
 </dict>
 </plist>
