@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UI
 
@@ -61,9 +61,31 @@ class ViewController: UIViewController {
 
     // MARK: Actions
 
-    @objc private func pickAnImage() {
+    @objc private func pickAnImageFromAlbum() {
         let pickerViewController = UIImagePickerController()
+        pickerViewController.delegate = self
+        pickerViewController.sourceType = .photoLibrary
         present(pickerViewController, animated: true)
+    }
+
+    @objc private func pickAnImageFromCamera() {
+        let pickerViewController = UIImagePickerController()
+        pickerViewController.delegate = self
+        pickerViewController.sourceType = .camera
+        present(pickerViewController, animated: true)
+    }
+}
+
+extension ViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            imageView.image = image
+        }
+        dismiss(animated: true)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }
 
