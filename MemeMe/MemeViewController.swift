@@ -16,6 +16,16 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         .foregroundColor: UIColor.white
     ]
 
+    private lazy var shareButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Share", image: nil, target: self, action: #selector(share))
+        return barButtonItem
+    }()
+
+    private lazy var saveButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Save", image: nil, target: self, action: #selector(save))
+        return barButtonItem
+    }()
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,6 +115,8 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationItem.setLeftBarButton(shareButton, animated: true)
+        navigationItem.setRightBarButton(saveButton, animated: true)
         addViewHierarchy()
     }
 
@@ -144,6 +156,12 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     @objc func keyboardWillHide(_ notification: Notification) {
         view.frame.origin.y = .zero
+    }
+
+    @objc private func share() {
+    }
+
+    @objc private func save() {
     }
 
     @objc private func pickAnImageFromAlbum() {
