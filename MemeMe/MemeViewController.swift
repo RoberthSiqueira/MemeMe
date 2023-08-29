@@ -111,9 +111,40 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         pickCameraBarButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        subscribeToKeyboardNotification()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeToKeyboardNotification()
+    }
+
+    // MARK: Private Methods
+
+    private func subscribeToKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    private func unsubscribeToKeyboardNotification() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    private func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        guard let keyboardSize = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return .zero }
+        return keyboardSize.height
     }
 
     // MARK: Actions
+
+    @objc func keyboardWillAppear(_ notification: Notification) {
+        view.frame.origin.y = -getKeyboardHeight(notification)
+    }
+
+    @objc func keyboardWillHide(_ notification: Notification) {
+        view.frame.origin.y = .zero
+    }
 
     @objc private func pickAnImageFromAlbum() {
         let pickerViewController = UIImagePickerController()
