@@ -10,7 +10,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let memeViewController = MemeViewController()
-        window?.rootViewController = memeViewController
+        let navigationController = UINavigationController(rootViewController: memeViewController)
+
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 
