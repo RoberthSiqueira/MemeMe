@@ -4,8 +4,15 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UI
 
-    private lazy var defaultTextAttributes: [NSAttributedString.Key: Any] = [
-        .font: UIFont.boldSystemFont(ofSize: 32.0),
+    private let defaultTexts: [String: String] = [
+        "top": "Top Text",
+        "bottom": "Bottom Text"
+    ]
+
+    private let defaultTextAttributes: [NSAttributedString.Key: Any] = [
+        .font: UIFont.boldSystemFont(ofSize: 40.0),
+        .strokeColor: UIColor.black,
+        .strokeWidth: -1.5,
         .foregroundColor: UIColor.white
     ]
 
@@ -37,6 +44,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.defaultTextAttributes = defaultTextAttributes
+        textField.delegate = self
         textField.textAlignment = .center
         textField.text = "Top Text"
         return textField
@@ -46,6 +54,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.defaultTextAttributes = defaultTextAttributes
+        textField.delegate = self
         textField.textAlignment = .center
         textField.text = "Bottom Text"
         return textField
@@ -136,3 +145,24 @@ extension MemeViewController: UIImagePickerControllerDelegate {
     }
 }
 
+// MARK: - Text Field Delegate
+
+extension MemeViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        guard let defaultOfTop = defaultTexts["top"],
+              let defaultOfBottom = defaultTexts["bottom"] else { return true }
+
+        if textField == topTextField && textField.text == defaultOfTop {
+            textField.text = String()
+        } else if textField.text == defaultOfBottom {
+            textField.text = String()
+        }
+
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
