@@ -4,6 +4,11 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UI
 
+    private lazy var defaultTextAttributes: [NSAttributedString.Key: Any] = [
+        .font: UIFont.boldSystemFont(ofSize: 32.0),
+        .foregroundColor: UIColor.white
+    ]
+
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -28,10 +33,30 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         return toolBar
     }()
 
+    private lazy var topTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.defaultTextAttributes = defaultTextAttributes
+        textField.textAlignment = .center
+        textField.text = "Top Text"
+        return textField
+    }()
+
+    private lazy var bottomTextField: UITextField = {
+        let textField = UITextField(frame: .zero)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.defaultTextAttributes = defaultTextAttributes
+        textField.textAlignment = .center
+        textField.text = "Bottom Text"
+        return textField
+    }()
+
     // MARK: View
 
     private func addViewHierarchy() {
         view.addSubview(imageView)
+        view.addSubview(topTextField)
+        view.addSubview(bottomTextField)
         view.addSubview(toolBar)
 
         setupConstraints()
@@ -45,6 +70,18 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
             imageView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: toolBar.topAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            topTextField.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 16),
+            topTextField.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24),
+            topTextField.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -24)
+        ])
+
+        NSLayoutConstraint.activate([
+            bottomTextField.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -16),
+            bottomTextField.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24),
+            bottomTextField.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -24)
         ])
 
         NSLayoutConstraint.activate([
