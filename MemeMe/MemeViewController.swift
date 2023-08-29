@@ -18,6 +18,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     private lazy var shareButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Share", image: nil, target: self, action: #selector(share))
+        barButtonItem.isEnabled = imageView.image != nil
         return barButtonItem
     }()
 
@@ -202,11 +203,8 @@ extension MemeViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageView.image = image
+            shareButton.isEnabled = true
         }
-        dismiss(animated: true)
-    }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
 }
