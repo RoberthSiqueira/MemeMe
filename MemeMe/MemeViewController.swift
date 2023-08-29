@@ -148,6 +148,19 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         return keyboardSize.height
     }
 
+    private func generateMemedImage() -> UIImage {
+        toolBar.isHidden = true
+
+        let _ = UIGraphicsImageRenderer(size: view.frame.size)
+        view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
+        let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
+        UIGraphicsEndImageContext()
+
+        toolBar.isHidden = false
+
+        return memedImage
+    }
+
     // MARK: Actions
 
     @objc func keyboardWillAppear(_ notification: Notification) {
@@ -162,6 +175,10 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     @objc private func save() {
+        let meme = Meme(topText: topTextField.text ?? String(),
+                        bottomText: bottomTextField.text ?? String(),
+                        originalImage: imageView.image ?? UIImage(),
+                        memedImage: generateMemedImage())
     }
 
     @objc private func pickAnImageFromAlbum() {
