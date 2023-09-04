@@ -150,16 +150,21 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     private func generateMemedImage() -> UIImage {
-        toolBar.isHidden = true
+        showBars(false)
 
-        let _ = UIGraphicsImageRenderer(size: view.frame.size)
+        let _ = UIGraphicsBeginImageContext(view.frame.size)
         view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let memedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
         UIGraphicsEndImageContext()
 
-        toolBar.isHidden = false
+        showBars(true)
 
         return memedImage
+    }
+
+    private func showBars(_ show: Bool) {
+        navigationController?.navigationBar.isHidden = !show
+        toolBar.isHidden = !show
     }
 
     // MARK: Actions
@@ -173,6 +178,14 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     @objc private func share() {
+        let memedImage = generateMemedImage()
+        let activityViewController = UIActivityViewController(activityItems: [memedImage, "Meme"], applicationActivities: nil)
+        present(activityViewController, animated: true)
+        activityViewController.completionWithItemsHandler = { [weak self] activity, success, items, error in
+            if success {
+                self?.save()
+            }
+        }
     }
 
     @objc private func save() {
