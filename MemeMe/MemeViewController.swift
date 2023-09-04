@@ -47,7 +47,8 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     private lazy var toolBar: UIToolbar = {
         let toolBar = UIToolbar(frame: .zero)
         toolBar.translatesAutoresizingMaskIntoConstraints = false
-        toolBar.setItems([pickAlbumBarButton, pickCameraBarButton], animated: true)
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        toolBar.setItems([flexibleSpace, pickAlbumBarButton, flexibleSpace, pickCameraBarButton, flexibleSpace], animated: true)
         return toolBar
     }()
 
