@@ -10,7 +10,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     ]
 
     private let defaultTextAttributes: [NSAttributedString.Key: Any] = [
-        .font: UIFont.boldSystemFont(ofSize: 40.0),
+        .font: UIFont(name: "Impact", size: 40.0) ?? UIFont.boldSystemFont(ofSize: 40.0),
         .strokeColor: UIColor.black,
         .strokeWidth: -1.5,
         .foregroundColor: UIColor.white
