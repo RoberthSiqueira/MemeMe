@@ -171,7 +171,9 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     // MARK: Actions
 
     @objc func keyboardWillAppear(_ notification: Notification) {
-        view.frame.origin.y = -getKeyboardHeight(notification)
+        if bottomTextField.isEditing {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+        }
     }
 
     @objc func keyboardWillHide(_ notification: Notification) {
