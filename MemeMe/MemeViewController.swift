@@ -30,7 +30,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleToFill
+        view.contentMode = .scaleAspectFill
         return imageView
     }()
 
