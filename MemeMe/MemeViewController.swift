@@ -5,8 +5,8 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     // MARK: UI
 
     private let defaultTexts: [String: String] = [
-        "top": "Top Text",
-        "bottom": "Bottom Text"
+        "top": "TOP TEXT",
+        "bottom": "BOTTOM TEXT"
     ]
 
     private let defaultTextAttributes: [NSAttributedString.Key: Any] = [
@@ -17,7 +17,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     ]
 
     private lazy var shareButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Share", image: nil, target: self, action: #selector(share))
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share))
         barButtonItem.isEnabled = imageView.image != nil
         return barButtonItem
     }()
@@ -30,17 +30,18 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .black
         return imageView
     }()
 
-    private lazy var pickAlbumBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Library", image: nil, target: self, action: #selector(pickAnImageFromAlbum))
+    private lazy var pickLibraryBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(title: "Library", image: nil, target: self, action: #selector(chooseImageFromLibraryOrCamera))
         return barButtonItem
     }()
 
     private lazy var pickCameraBarButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Camera", image: nil, target: self, action: #selector(pickAnImageFromCamera))
+        let barButtonItem = UIBarButtonItem(title: "Camera", image: nil, target: self, action: #selector(chooseImageFromLibraryOrCamera))
         return barButtonItem
     }()
 
@@ -48,7 +49,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let toolBar = UIToolbar(frame: .zero)
         toolBar.translatesAutoresizingMaskIntoConstraints = false
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        toolBar.setItems([flexibleSpace, pickAlbumBarButton, flexibleSpace, pickCameraBarButton, flexibleSpace], animated: true)
+        toolBar.setItems([flexibleSpace, pickLibraryBarButton, flexibleSpace, pickCameraBarButton, flexibleSpace], animated: true)
         return toolBar
     }()
 
@@ -56,9 +57,12 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.defaultTextAttributes = defaultTextAttributes
+        textField.autocapitalizationType = .allCharacters
+        textField.minimumFontSize = 10
+        textField.adjustsFontSizeToFitWidth = true
         textField.delegate = self
         textField.textAlignment = .center
-        textField.text = "Top Text"
+        textField.text = defaultTexts["top"]
         return textField
     }()
 
@@ -66,9 +70,12 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.defaultTextAttributes = defaultTextAttributes
+        textField.autocapitalizationType = .allCharacters
+        textField.minimumFontSize = 10
+        textField.adjustsFontSizeToFitWidth = true
         textField.delegate = self
         textField.textAlignment = .center
-        textField.text = "Bottom Text"
+        textField.text = defaultTexts["bottom"]
         return textField
     }()
 
@@ -112,7 +119,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         ])
     }
 
-    // MARK: Instance Methods
+    // MARK: Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +131,11 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        #if targetEnvironment(simulator)
+        pickCameraBarButton.isEnabled = false
+        #else
         pickCameraBarButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        #endif
         subscribeToKeyboardNotification()
     }
 
@@ -198,17 +209,17 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
                         memedImage: generateMemedImage())
     }
 
-    @objc private func pickAnImageFromAlbum() {
+    @objc private func chooseImageFromLibraryOrCamera(_ sender: UIBarButtonItem) {
         let pickerViewController = UIImagePickerController()
+        pickerViewController.allowsEditing = true
         pickerViewController.delegate = self
-        pickerViewController.sourceType = .photoLibrary
-        present(pickerViewController, animated: true)
-    }
 
-    @objc private func pickAnImageFromCamera() {
-        let pickerViewController = UIImagePickerController()
-        pickerViewController.delegate = self
-        pickerViewController.sourceType = .camera
+        if sender == pickLibraryBarButton {
+            pickerViewController.sourceType = .photoLibrary
+        } else if sender == pickCameraBarButton {
+            pickerViewController.sourceType = .camera
+        }
+
         present(pickerViewController, animated: true)
     }
 }
@@ -236,6 +247,16 @@ extension MemeViewController: UITextFieldDelegate {
             textField.text = String()
         } else if textField.text == defaultOfBottom {
             textField.text = String()
+        }
+
+        return true
+    }
+
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if textField == topTextField && textField.text == String() {
+            textField.text = defaultTexts["top"]
+        } else if textField.text == String() {
+            textField.text = defaultTexts["bottom"]
         }
 
         return true
