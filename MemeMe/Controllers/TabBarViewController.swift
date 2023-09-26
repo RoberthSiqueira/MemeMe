@@ -4,6 +4,17 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
     // MARK: UI
 
+    private lazy var tableModeTabBarItem: UITabBarItem = {
+        let image = UIImage(imageLiteralResourceName: "table")
+        let tabBarItem = UITabBarItem(title: nil, image: image, tag: 0)
+        return tabBarItem
+    }()
+
+    private lazy var collectionModeTabBarItem: UITabBarItem = {
+        let image = UIImage(imageLiteralResourceName: "collection")
+        let tabBarItem = UITabBarItem(title: nil, image: image, tag: 0)
+        return tabBarItem
+    }()
 
     // MARK: LIFE CYCLE METHODS
 
@@ -16,5 +27,16 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
     // MARK: PRIVATE METHODS
 
     private func setupViewControllers() {
+        let memeVC = MemeViewController()
+        let memeCollectionVC = MemeCollectionViewController()
+
+        let navigationFromMemeVC = UINavigationController(rootViewController: memeVC)
+        let navigationFromMemeCollectionVC = UINavigationController(rootViewController: memeCollectionVC)
+
+        navigationFromMemeVC.tabBarItem = tableModeTabBarItem
+        navigationFromMemeCollectionVC.tabBarItem = collectionModeTabBarItem
+        
+        setViewControllers([navigationFromMemeVC, navigationFromMemeCollectionVC], animated: true)
+        selectedViewController = viewControllers?[0]
     }
 }
