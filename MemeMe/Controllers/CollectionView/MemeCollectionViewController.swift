@@ -4,11 +4,26 @@ private let reuseIdentifier = "Cell"
 
 class MemeCollectionViewController: UICollectionViewController {
 
+    // MARK: - PROPERTIES
+
     var memes: [Meme]! {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         return appDelegate.memes
     }
+
+    // MARK: - INIT
+
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - LIFE CYCLE METHODS
 
     override func viewDidLoad() {
         super.viewDidLoad()

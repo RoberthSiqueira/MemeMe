@@ -28,7 +28,7 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
     private func setupViewControllers() {
         let memeVC = MemeViewController()
-        let memeCollectionVC = MemeCollectionViewController()
+        let memeCollectionVC = MemeCollectionViewController(collectionViewLayout: UICollectionViewLayout())
 
         let navigationFromMemeVC = UINavigationController(rootViewController: memeVC)
         let navigationFromMemeCollectionVC = UINavigationController(rootViewController: memeCollectionVC)
