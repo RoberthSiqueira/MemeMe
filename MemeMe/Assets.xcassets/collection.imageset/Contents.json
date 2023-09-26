@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "collection_60x60.png",
+      "filename" : "collection.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "collection@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "collection@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
