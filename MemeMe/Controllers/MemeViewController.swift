@@ -203,10 +203,15 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
     }
 
     @objc private func save() {
+        let memedImage = generateMemedImage()
         let meme = Meme(topText: topTextField.text ?? String(),
                         bottomText: bottomTextField.text ?? String(),
                         originalImage: imageView.image ?? UIImage(),
-                        memedImage: generateMemedImage())
+                        memedImage: memedImage)
+
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.memes.append(meme)
+        }
     }
 
     @objc private func chooseImageFromLibraryOrCamera(_ sender: UIBarButtonItem) {
