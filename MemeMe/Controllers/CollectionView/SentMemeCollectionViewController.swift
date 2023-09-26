@@ -2,7 +2,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class MemeCollectionViewController: UICollectionViewController {
+class SentMemeCollectionViewController: UICollectionViewController {
 
     // MARK: - PROPERTIES
 
