@@ -1,10 +1,6 @@
 import UIKit
 
-protocol CustomMemeCellDelegate {
-    func setMeme(_ meme: Meme)
-}
-
-class CustomMemeCell: UICollectionViewCell {
+class CustomMemeCollectionCell: UICollectionViewCell {
 
     // MARK: - PROPERTIES
 
@@ -48,7 +44,7 @@ class CustomMemeCell: UICollectionViewCell {
     }
 }
 
-extension CustomMemeCell: CustomMemeCellDelegate {
+extension CustomMemeCollectionCell: CustomMemeCellsDelegate {
     func setMeme(_ meme: Meme) {
         self.meme = meme
     }

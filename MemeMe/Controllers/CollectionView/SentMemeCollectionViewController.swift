@@ -32,7 +32,7 @@ class SentMemeCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.register(CustomMemeCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.register(CustomMemeCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -51,7 +51,7 @@ class SentMemeCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? CustomMemeCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as? CustomMemeCollectionCell else {
             return UICollectionViewCell()
         }
         cell.setMeme(memes[indexPath.row])
