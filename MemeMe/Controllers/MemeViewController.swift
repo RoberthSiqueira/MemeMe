@@ -22,8 +22,8 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         return barButtonItem
     }()
 
-    private lazy var saveButton: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(title: "Save", image: nil, target: self, action: #selector(save))
+    private lazy var cancelButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         return barButtonItem
     }()
 
@@ -125,7 +125,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.setLeftBarButton(shareButton, animated: true)
-        navigationItem.setRightBarButton(saveButton, animated: true)
+        navigationItem.setRightBarButton(cancelButton, animated: true)
         addViewHierarchy()
     }
 
@@ -200,6 +200,10 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
                 self?.save()
             }
         }
+    }
+
+    @objc private func cancel() {
+        navigationController?.popViewController(animated: true)
     }
 
     @objc private func save() {

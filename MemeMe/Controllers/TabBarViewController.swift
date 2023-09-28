@@ -30,19 +30,19 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         let memeVC = MemeViewController()
         let sentMemeCollectionVC = SentMemeCollectionViewController(collectionViewFlowLayout: UICollectionViewFlowLayout())
 
-        let navigationFromMemeVC = UINavigationController(rootViewController: memeVC)
-        let navigationFromMemeCollectionVC = UINavigationController(rootViewController: sentMemeCollectionVC)
+        let navigationFromMeme = UINavigationController(rootViewController: memeVC)
+        let navigationFromMemeCollection = UINavigationController(rootViewController: sentMemeCollectionVC)
 
-        navigationFromMemeVC.tabBarItem = tableModeTabBarItem
-        navigationFromMemeCollectionVC.tabBarItem = collectionModeTabBarItem
+        navigationFromMeme.tabBarItem = tableModeTabBarItem
+        navigationFromMemeCollection.tabBarItem = collectionModeTabBarItem
 
-        let viewControllers = [navigationFromMemeVC, navigationFromMemeCollectionVC]
+        let navigationControllers = [navigationFromMeme, navigationFromMemeCollection]
 
-        viewControllers.forEach { navigationVC in
-            navigationVC.navigationBar.topItem?.title = "Sent Memes"
+        navigationControllers.forEach { navigation in
+            navigation.navigationBar.topItem?.title = "Sent Memes"
         }
         
-        setViewControllers(viewControllers, animated: true)
-        selectedViewController = viewControllers[0]
+        setViewControllers(navigationControllers, animated: true)
+        selectedViewController = navigationControllers[0]
     }
 }
