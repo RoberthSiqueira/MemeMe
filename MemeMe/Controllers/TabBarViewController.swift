@@ -4,6 +4,11 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
     // MARK: UI
 
+    private lazy var addMemeButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openMemeEditor))
+        return barButtonItem
+    }()
+
     private lazy var tableModeTabBarItem: UITabBarItem = {
         let image = UIImage(imageLiteralResourceName: "table")
         let tabBarItem = UITabBarItem(title: nil, image: image, tag: 0)
@@ -20,11 +25,16 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupNavigationItems()
         setupViewControllers()
     }
 
     // MARK: PRIVATE METHODS
+
+    private func setupNavigationItems() {
+        navigationItem.title = "Sent Memes"
+        navigationItem.setRightBarButton(addMemeButton, animated: true)
+    }
 
     private func setupViewControllers() {
         let memeVC = MemeViewController()
@@ -37,12 +47,15 @@ class TabBarViewController: UITabBarController, UITabBarControllerDelegate {
         navigationFromMemeCollection.tabBarItem = collectionModeTabBarItem
 
         let navigationControllers = [navigationFromMeme, navigationFromMemeCollection]
-
-        navigationControllers.forEach { navigation in
-            navigation.navigationBar.topItem?.title = "Sent Memes"
-        }
         
         setViewControllers(navigationControllers, animated: true)
         selectedViewController = navigationControllers[0]
+    }
+
+    // MARK: - ACTION
+
+    @objc private func openMemeEditor() {
+        let memeVC = MemeViewController()
+        navigationController?.pushViewController(memeVC, animated: true)
     }
 }
