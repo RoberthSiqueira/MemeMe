@@ -65,4 +65,12 @@ class SentMemeTableViewController: UITableViewController {
         cell.setMeme(memes[indexPath.row])
         return cell
     }
+
+    // MARK: - Table view delegate
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let memedImage = memes[indexPath.row].memedImage
+        let detailVC = MemeDetailViewController(memedImage: memedImage)
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
 }

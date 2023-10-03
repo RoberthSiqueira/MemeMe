@@ -83,7 +83,9 @@ class SentMemeCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDelegate
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Create e Controller to Show Meme
+        let memedImage = memes[indexPath.row].memedImage
+        let detailVC = MemeDetailViewController(memedImage: memedImage)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
