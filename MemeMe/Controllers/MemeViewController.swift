@@ -198,6 +198,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         activityViewController.completionWithItemsHandler = { [weak self] activity, success, items, error in
             if success {
                 self?.save()
+                self?.navigationController?.popViewController(animated: true)
             }
         }
     }
