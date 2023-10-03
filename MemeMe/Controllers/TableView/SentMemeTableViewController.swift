@@ -12,17 +12,38 @@ class SentMemeTableViewController: UITableViewController {
         return appDelegate?.memes ?? []
     }
 
+    // MARK: - UI
+
+    private lazy var addMemeButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openMemeEditor))
+        return barButtonItem
+    }()
+
     // MARK: - LIFE CYCLE METHODS
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationItems()
         tableView.register(CustomMemeTableCell.self, forCellReuseIdentifier: cellIdentifier)
-        navigationController?.navigationBar.isHidden = true
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+    }
+
+    // MARK: - PRIVATE METHODS
+
+    private func setupNavigationItems() {
+        navigationItem.title = "Sent Memes"
+        navigationItem.setRightBarButton(addMemeButton, animated: true)
+    }
+
+    // MARK: - ACTION
+
+    @objc private func openMemeEditor() {
+        let memeVC = MemeViewController()
+        navigationController?.pushViewController(memeVC, animated: true)
     }
 
     // MARK: - Table view data source

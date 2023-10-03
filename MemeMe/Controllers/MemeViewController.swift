@@ -131,6 +131,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
         #if targetEnvironment(simulator)
         pickCameraBarButton.isEnabled = false
         #else
@@ -141,6 +142,7 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
         unsubscribeToKeyboardNotification()
     }
 

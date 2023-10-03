@@ -12,6 +12,13 @@ class SentMemeCollectionViewController: UICollectionViewController {
         return appDelegate?.memes ?? []
     }
 
+    // MARK: - UI
+
+    private lazy var addMemeButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(openMemeEditor))
+        return barButtonItem
+    }()
+
     // MARK: - INIT
 
     init(collectionViewFlowLayout layout: UICollectionViewFlowLayout) {
@@ -32,12 +39,27 @@ class SentMemeCollectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationItems()
         collectionView.register(CustomMemeCollectionCell.self, forCellWithReuseIdentifier: cellIdentifier)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         collectionView.reloadData()
+    }
+
+    // MARK: - PRIVATE METHODS
+
+    private func setupNavigationItems() {
+        navigationItem.title = "Sent Memes"
+        navigationItem.setRightBarButton(addMemeButton, animated: true)
+    }
+
+    // MARK: - ACTION
+
+    @objc private func openMemeEditor() {
+        let memeVC = MemeViewController()
+        navigationController?.pushViewController(memeVC, animated: true)
     }
 
     // MARK: UICollectionViewDataSource
