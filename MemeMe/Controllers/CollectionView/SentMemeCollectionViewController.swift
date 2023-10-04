@@ -58,7 +58,7 @@ class SentMemeCollectionViewController: UICollectionViewController {
     // MARK: - ACTION
 
     @objc private func openMemeEditor() {
-        let memeVC = MemeViewController()
+        let memeVC = MemeEditorViewController()
         navigationController?.pushViewController(memeVC, animated: true)
     }
 

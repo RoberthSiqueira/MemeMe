@@ -1,6 +1,6 @@
 import UIKit
 
-class MemeViewController: UIViewController, UINavigationControllerDelegate {
+class MemeEditorViewController: UIViewController, UINavigationControllerDelegate {
 
     // MARK: UI
 
@@ -101,13 +101,13 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
         ])
 
         NSLayoutConstraint.activate([
-            topTextField.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 16),
+            topTextField.topAnchor.constraint(equalTo: imageView.topAnchor, constant: 40),
             topTextField.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24),
             topTextField.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -24)
         ])
 
         NSLayoutConstraint.activate([
-            bottomTextField.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -16),
+            bottomTextField.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -40),
             bottomTextField.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: 24),
             bottomTextField.trailingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: -24)
         ])
@@ -238,10 +238,11 @@ class MemeViewController: UIViewController, UINavigationControllerDelegate {
 
 // MARK: - Image Picker Delegate
 
-extension MemeViewController: UIImagePickerControllerDelegate {
+extension MemeEditorViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         if let image = info[.originalImage] as? UIImage {
             imageView.image = image
+            imageView.backgroundColor = .white
             shareButton.isEnabled = true
         }
         dismiss(animated: true)
@@ -250,7 +251,7 @@ extension MemeViewController: UIImagePickerControllerDelegate {
 
 // MARK: - Text Field Delegate
 
-extension MemeViewController: UITextFieldDelegate {
+extension MemeEditorViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         guard let defaultOfTop = defaultTexts["top"],
               let defaultOfBottom = defaultTexts["bottom"] else { return true }
